@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 import { GameBackground, GameOver } from '../consts/SceneKeys'
 import * as Colors from '../consts/Colors'
-
+import * as AudioKeys from '../consts/AudioKeys'
 
 import { PressStart2P } from '../consts/Fonts'
 
@@ -90,10 +90,12 @@ class Game extends Phaser.Scene
 			return
 		}
 
+		this.sound.play(AudioKeys.PongPlop)
 	}
 
 	handlePaddleBallCollision(paddle, ball)
 	{
+		this.sound.play(AudioKeys.PongBeep)
 
 		/** @type {Phaser.Physics.Arcade.Body} */
 		const body = this.ball.body
