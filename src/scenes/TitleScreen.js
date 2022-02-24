@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-
+import { Game } from '../consts/SceneKeys'
 export default class TitleScreen extends Phaser.Scene
 {
 	preload()
@@ -9,7 +9,21 @@ export default class TitleScreen extends Phaser.Scene
 
 	create()
 	{
-		const text = this.add.text(400, 250, 'Old School Tennis') 
-		text.setOrigin(0.5, 0.5)
+		const title = this.add.text(400, 200, 'Old School Tennis' , {
+			fontSize: 50,
+			fontFamily: '"Press Start 2P'
+		}) 
+		title.setOrigin(0.5, 0.5)
+		
+		this.add.text(400,300, 'Press Space To Start', {
+			fontFamily: '"Press Start 2P'
+		})
+		.setOrigin(0.5)
+
+		this.input.keyboard.once('keydown-SPACE', () => {
+			this.scene.start(Game)
+		})
+
+
 	}
 }
