@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-
+import WebFontFile from './WebFontFile'
 
 
 class Game extends Phaser.Scene
@@ -14,11 +14,16 @@ class Game extends Phaser.Scene
 	}
 	preload()
 	{
-		
+		const fonts = new WebFontFile(this.load, 'Press Start 2P')
+		this.load.addFile(fonts)
 	}
 
 	create()
 	{
+		this.scene.run('game-background')
+		this.scene.sendToBack('game-background')
+		
+		
 		this.physics.world.setBounds(-100, 0, 1000, 500)
 		
 		this.ball = this.add.circle(400, 250, 10, 0xffffff, 1)
@@ -39,7 +44,8 @@ class Game extends Phaser.Scene
 		this.physics.add.collider(this.paddleRight, this.ball)
 
 		const scoreStyle = {
-			fontSize: 48
+			fontSize: 48,
+			fontFamily: "'Press Start 2P'"
 		}
 		this.leftScoreLabel = this.add.text(300, 125, '0', scoreStyle)
 		.setOrigin(0.5,0.5)
@@ -71,7 +77,7 @@ class Game extends Phaser.Scene
 		{
 			return
 		}
-		const aiSpeed = 0.1
+		const aiSpeed = 3.0
 		if (diff < 0)
 		{
 			this.paddleRightVelocity.y = -aiSpeed
@@ -83,7 +89,7 @@ class Game extends Phaser.Scene
 		else if (diff > 0)
 		{
 			this.paddleRightVelocity.y = aiSpeed
-			if (this.paddleRightVelocity.y < 10)
+			if (this.paddleRightVelocity.y > 10)
 			{
 				this.paddleRightVelocity.y = 10
 			} 

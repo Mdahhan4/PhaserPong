@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Mdahhan4/PhaserPong#readme",
   "dependencies": {
     "parcel-bundler": "^1.12.5",
-    "phaser": "^3.55.2"
+    "phaser": "^3.55.2",
+    "webfontloader": "^1.6.28"
   }
 }
