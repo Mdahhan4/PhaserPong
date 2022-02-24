@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
 
 import WebFontFile from './WebFontFile'
-
+import * as Colors from '../consts/Colors'
+import { GameBackground } from '../consts/SceneKeys'
 
 class Game extends Phaser.Scene
 {
@@ -20,13 +21,13 @@ class Game extends Phaser.Scene
 
 	create()
 	{
-		this.scene.run('game-background')
-		this.scene.sendToBack('game-background')
+		this.scene.run(GameBackground)
+		this.scene.sendToBack(GameBackground)
 		
 		
 		this.physics.world.setBounds(-100, 0, 1000, 500)
 		
-		this.ball = this.add.circle(400, 250, 10, 0xffffff, 1)
+		this.ball = this.add.circle(400, 250, 10, Colors.White, 1)
 		this.physics.add.existing(this.ball)
 		this.ball.body.setBounce(1,1)
 		
@@ -34,10 +35,10 @@ class Game extends Phaser.Scene
 
 		this.resetBall()
 
-		this.paddleLeft = this.add.rectangle(50, 250, 30, 100, 0xffffff, 1)
+		this.paddleLeft = this.add.rectangle(50, 250, 30, 100, Colors.White, 1)
 		this.physics.add.existing(this.paddleLeft, true)
 
-		this.paddleRight = this.add.rectangle(750, 250, 30, 100, 0xffffff, 1)
+		this.paddleRight = this.add.rectangle(750, 250, 30, 100, Colors.White, 1)
 		this.physics.add.existing(this.paddleRight, true)
 
 		this.physics.add.collider(this.paddleLeft, this.ball)
@@ -59,6 +60,15 @@ class Game extends Phaser.Scene
 
 	update()
 	{
+		
+
+		this.updateAI()
+		this.checkScore()
+		this.processPlayerInput()
+
+	}
+	processPlayerInput()
+	{
 		const body = this.paddleLeft.body
 
 		if(this.cursors.up.isDown)
@@ -71,7 +81,9 @@ class Game extends Phaser.Scene
 			this.paddleLeft.y += 10
 			body.updateFromGameObject()
 		}
-
+	}
+	updateAI()
+	{
 		const diff = this.ball.y - this.paddleRight.y
 		if (Math.abs(diff) < 10)
 		{
@@ -97,7 +109,9 @@ class Game extends Phaser.Scene
 
 		this.paddleRight.y += this.paddleRightVelocity.y
 		this.paddleRight.body.updateFromGameObject()
-
+	}
+	checkScore()
+	{
 		if (this.ball.x < -30)
 		{
 			this.resetBall()
