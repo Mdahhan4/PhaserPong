@@ -14,7 +14,7 @@ export default class TitleScreen extends Phaser.Scene
 
 	create()
 	{
-		const title = this.add.text(400, 200, 'Old School Tennis', {
+		const title = this.add.text(400, 200, 'Phaser Pong', {
 			fontSize: 38,
 			fontFamily: PressStart2P
 		})
